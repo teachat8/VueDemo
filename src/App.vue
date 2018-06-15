@@ -1,59 +1,78 @@
 <template>
-   <div>
-    <header class="site-header jumbotron">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>请发表对Vue的评论</h1>
-          </div>
-        </div>
+    <div class="todo-container">
+      <div class="todo-wrap">
+        <TodoHeader :addTodo="addTodo" />
+        <TodoList :todos="todos" :deleteTodo="deleteTodo" />
+        <TodoFooter :todos="todos" :deleteCompleteTodos="deleteCompleteTodos" :selectAllTodos="selectAllTodos" />
       </div>
-    </header>
-    <div class="container">
-      <Add :addComment = "addComment"  />
-      <List :comments = "comments" :deleteComment="deleteComment" />
-    </div>
-  </div>
+   </div>
 </template>
 
 <script>
-  import Add from './components/Add.vue'
-  import List from './components/List.vue'
+  import TodoHeader from './components/TodoHeader.vue'
+  import TodoList from './components/TodoList.vue'
+  import TodoFooter from './components/TodoFooter.vue'
   export default {
+    components : {
+      TodoHeader,
+      TodoList,
+      TodoFooter
+    },
     data () {
       return {
-        comments : [  //  数据在哪个组件， 更新数据的行为（方法）就应该定义在哪个组件
-          {
-            name : 'BOB',
-            content : 'Vue 还不错'
-          },
-          {
-            name : 'Cat',
-            content : 'Vue So Easy'
-          },
-          {
-            name : 'BZ',
-            content : 'Vue So So'
-          }
-        ]
+        // 从localStorage 读取todos
+        todos : JSON.parse(window.localStorage.getItem('todos_key') || '[ ]')
+
+        // todos : [
+        //   {title : '吃饭', complete : false},
+        //   {title : '睡觉', complete : true},
+        //   {title : 'coding', complete : false}
+        // ]
       }
     },
     methods : {
-      // 添加评论
-      addComment (comment) {
-        this.comments.unshift(comment)
+      addTodo (todo) {
+        this.todos.unshift(todo)
       },
-      // 删除指定下标的评论
-      deleteComment(index) {
-        this.comments.splice(index,1)
+      deleteTodo (index) {
+        this.todos.splice(index, 1)
+      },
+      //删除所有选中的todo
+      deleteCompleteTodos () {
+        this.todos = this.todos.filter( todo => !todo.complete)
+      },
+      // 全选或全不选
+      selectAllTodos (check) {
+        this.todos.forEach( todo => todo.complete =check)
       }
+
     },
-    components : {Add,List}
+    watch : {  // 监视
+      todos : {
+        deep : true,  //深度监视
+        handler : function (value) {
+          // 将todos的最新的值得json数据，保存到localStorage
+          window.localStorage.setItem('todos_key', JSON.stringify(value))
+        }
+      }
+
+    }
+
   }
 
 </script>
 
 <style>
+  /*app*/
+.todo-container {
+  width: 600px;
+  margin: 0 auto;
+}
+.todo-container .todo-wrap {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
 </style>
 
