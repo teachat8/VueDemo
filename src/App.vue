@@ -4,13 +4,20 @@
         <!-- <TodoHeader :addTodo="addTodo" /> -->
         <!-- <TodoHeader @addTodo = "addTodo" />  给TodoHeader 标签对象绑定addTodo事件监听 -->
         <TodoHeader ref="header" />
-        <TodoList :todos="todos" :deleteTodo="deleteTodo" />
+        <TodoList :todos="todos" />
         <TodoFooter :todos="todos" :deleteCompleteTodos="deleteCompleteTodos" :selectAllTodos="selectAllTodos" />
       </div>
    </div>
 </template>
 
+<!--
+  绑定事件监听      ----订阅消息
+  触发事件              ----发布信息
+
+-->
+
 <script>
+  import PubSub from 'pubsub-js'
   import TodoHeader from './components/TodoHeader.vue'
   import TodoList from './components/TodoList.vue'
   import TodoFooter from './components/TodoFooter.vue'
@@ -35,7 +42,12 @@
     mounted () {  //执行异步代码
       // 给<TodoHeader />绑定addTodo事件监听
       // this.$on('addTodo', this.addTodo ) //  给App绑定的事件监听，不对
-      this.$refs.header.$on('addTodo', this.addTodo)
+      // this.$refs.header.$on('addTodo', this.addTodo)
+
+      // 订阅消息
+      PubSub.subscribe('deleteTodo',  (msg, index) => {
+        this.deleteTodo(index)
+      })
 
     },
     methods : {
