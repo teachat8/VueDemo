@@ -1,9 +1,7 @@
 <template>
     <div class="todo-container">
       <div class="todo-wrap">
-        <!-- <TodoHeader :addTodo="addTodo" /> -->
-        <!-- <TodoHeader @addTodo = "addTodo" />  给TodoHeader 标签对象绑定addTodo事件监听 -->
-        <TodoHeader ref="header" />
+        <TodoHeader :addTodo="addTodo" />
         <TodoList :todos="todos" :deleteTodo="deleteTodo" />
         <TodoFooter :todos="todos" :deleteCompleteTodos="deleteCompleteTodos" :selectAllTodos="selectAllTodos" />
       </div>
@@ -31,12 +29,6 @@
         //   {title : 'coding', complete : false}
         // ]
       }
-    },
-    mounted () {  //执行异步代码
-      // 给<TodoHeader />绑定addTodo事件监听
-      // this.$on('addTodo', this.addTodo ) //  给App绑定的事件监听，不对
-      this.$refs.header.$on('addTodo', this.addTodo)
-
     },
     methods : {
       addTodo (todo) {

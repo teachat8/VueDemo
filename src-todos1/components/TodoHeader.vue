@@ -29,10 +29,7 @@
           complete : false
         }
        // 3.  将todo对象添加到todos数组
-        // this.addTodo(todo)
-
-        // 触发自定义事件: addTodo
-        this.$emit('addTodo', todo)
+        this.addTodo(todo)
        // 4.   清除输入
         this.title = ''
       }
