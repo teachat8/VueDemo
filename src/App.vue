@@ -25,6 +25,7 @@
   import TodoHeader from './components/TodoHeader.vue'
   import TodoList from './components/TodoList.vue'
   import TodoFooter from './components/TodoFooter.vue'
+  import storageUtil  from './util/storageUtil.js'
   export default {
     components : {
       TodoHeader,
@@ -34,7 +35,8 @@
     data () {
       return {
         // 从localStorage 读取todos
-        todos : JSON.parse(window.localStorage.getItem('todos_key') || '[ ]')
+        // todos : JSON.parse(window.localStorage.getItem('todos_key') || '[ ]')
+        todos : storageUtil.readTodos()
 
         // todos : [
         //   {title : '吃饭', complete : false},
@@ -59,7 +61,7 @@
     mounted () {  //执行异步代码
       // 给<TodoHeader />绑定addTodo事件监听
       // this.$on('addTodo', this.addTodo ) //  给App绑定的事件监听，不对
-      // this.$refs.header.$on('addTodo', this.addTodo)
+      this.$refs.header.$on('addTodo', this.addTodo)
 
       // 订阅消息
       PubSub.subscribe('deleteTodo',  (msg, index) => {
@@ -87,10 +89,12 @@
     watch : {  // 监视
       todos : {
         deep : true,  //深度监视
-        handler : function (value) {
+         /* handler : function (value) {
           // 将todos的最新的值得json数据，保存到localStorage
-          window.localStorage.setItem('todos_key', JSON.stringify(value))
-        }
+          // window.localStorage.setItem('todos_key', JSON.stringify(value))
+          storageUtil.saveTodos(value)
+        } */
+        handler : storageUtil.saveTodos
       }
 
     }
