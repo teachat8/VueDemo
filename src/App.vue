@@ -17,8 +17,9 @@
       <div class="col-xs-6">
         <div class="panel">
           <div class="panel-body">
-            <!--显示当前组件-->
+            <!--<keep-alive>缓存路由组件，默认情况下，被切换的路由组件对象会死亡释放，再次回来时是重新创建的-->
             <keep-alive>
+              <!-- <router-view >显示当前组件，属性中携带数据 -->
               <router-view msg="abc"></router-view>
             </keep-alive>
           </div>
