@@ -34,8 +34,8 @@ export default new VueRouter({      //  用于创建路由器对象，包含多�
           // 配置嵌套路由
           children : [
             {
-              // path : '/home/message/detail/:id',      //  :表示占位，路由路径携带params参数
-              path : '/home/message/detail',        //   路由路径携带query参数
+              path : '/home/message/detail/:id',      //  :表示占位，路由路径携带params参数
+              // path : '/home/message/detail',        //   路由路径携带query参数
               component : MessageDetail
             }
           ]

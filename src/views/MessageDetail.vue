@@ -1,9 +1,9 @@
 <template>
 <div>
   <!-- 路由组件中读取请求参数params -->
-  <!-- <p>ID : {{$route.params.id}}</p> -->
+  <p>ID : {{$route.params.id}}</p>
     <!-- 路由组件中读取请求参数query -->
-  <p>ID : {{$route.query.id}}</p>
+  <!-- <p>ID : {{$route.query.id}}</p> -->
   <ul>
     <li>id : {{messageDetail.id}} </li>
     <li>title : {{messageDetail.title}}</li>
@@ -40,16 +40,16 @@
        ]
 
        this.allMessageDetail = allMessageDetail
-      //  const id = this.$route.params.id*1
-       const id = this.$route.query.id*1
+       const id = this.$route.params.id*1
+      //  const id = this.$route.query.id*1
        this.messageDetail = allMessageDetail.find(detail => detail.id ===id)
       }, 1000);
     },
 
     watch : {
       $route : function (value) {   //  路由路径(params)发生了改变
-        // const id = value.params.id*1
-        const id = this.$route.query.id*1
+        const id = value.params.id*1
+        // const id = this.$route.query.id*1
         this.messageDetail = this.allMessageDetail.find( detail => detail.id ===id)
 
       }
